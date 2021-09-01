@@ -1,6 +1,31 @@
 import { Container } from "./styles";
+import { useEffect, useState } from "react";
+import { apiGetTransactions } from "../../../src/services/api";
+import { format } from "date-fns";
+
+interface ITransactions {
+  id: string;
+  title: string;
+  amount: number;
+  type: string;
+  category: string;
+  createdAt: Date;
+}
 
 export function TransactionsTable() {
+  const [transactions, setTransactions] = useState<ITransactions[]>([]);
+  useEffect(() => {
+    async function getTransactions() {
+      try {
+        const transactions = await apiGetTransactions();
+        setTransactions(transactions);
+      } catch (err) {
+        console.log(err);
+      }
+    }
+    getTransactions();
+  }, []);
+
   return (
     <Container>
       <table>
@@ -13,24 +38,17 @@ export function TransactionsTable() {
           </tr>
         </thead>
         <tbody>
-          <tr>
-            <td>Desenvolvimento de website</td>
-            <td className="deposit">R$12.000</td>
-            <td>Desenvolvimento</td>
-            <td>20/02/2021</td>
-          </tr>
-          <tr>
-            <td>Desenvolvimento de website</td>
-            <td className="withdrawal">-R$4.000</td>
-            <td>Desenvolvimento</td>
-            <td>20/02/2021</td>
-          </tr>
-          <tr>
-            <td>Desenvolvimento de website</td>
-            <td className="withdrawal">-R$1.000</td>
-            <td>Desenvolvimento</td>
-            <td>20/02/2021</td>
-          </tr>
+          {transactions.map((transactions) => (
+            <tr key={transactions.id}>
+              <td>{transactions.title}</td>
+              <td className={transactions.type}>
+                {transactions.type === "withdrawal" ? "-" : ""}R$
+                {transactions.amount}
+              </td>
+              <td>{transactions.category}</td>
+              <td>{format(new Date(transactions.createdAt), "dd/MM/yyyy")}</td>
+            </tr>
+          ))}
         </tbody>
       </table>
     </Container>

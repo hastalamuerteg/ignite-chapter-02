@@ -53,4 +53,18 @@ button {
   opacity: 0.6;
   cursor: not-allowed;
 }
+
+::-webkit-scrollbar { 
+  width: .4rem;
+}
+
+::-webkit-scrollbar-track {
+  background: #777;
+}
+
+::-webkit-scrollbar-thumb {
+  border-radius: 2rem;
+  background: var(--green);
+}
+
 `;
