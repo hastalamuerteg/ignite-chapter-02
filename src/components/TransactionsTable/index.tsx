@@ -17,8 +17,8 @@ export function TransactionsTable() {
   useEffect(() => {
     async function getTransactions() {
       try {
-        const transactions = await apiGetTransactions();
-        setTransactions(transactions);
+        const receivedTransactions = await apiGetTransactions();
+        setTransactions(receivedTransactions);
       } catch (err) {
         console.log(err);
       }

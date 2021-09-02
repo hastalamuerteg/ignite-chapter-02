@@ -10,7 +10,6 @@ export const GlobalStyle = createGlobalStyle`
   --blue-light: #6933ff;
   --text-title: #363f5f;
   --text-body: #969cb3;
-  --background: #f0f2f5;
   --shape: #ffffff;
 }
 
@@ -54,6 +53,45 @@ button {
   cursor: not-allowed;
 }
 
+
+.react__modal--overlay {
+  background: rgba(0, 0, 0, 0.5);
+  position: fixed;
+
+  top: 0;
+  right: 0;
+  left: 0;
+  bottom: 0;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+
+.react__modal--content {
+  width: 100%;
+  max-width: 32rem;
+
+  background: var(--background);
+  padding: 3rem 2rem;
+  position: relative;
+  border-radius: .25rem;
+}
+
+.react__modal--close { 
+  position: absolute;
+  right: 1rem;
+  top: 1.5rem;
+  border: 0;
+  background: transparent;
+  transition: filter .2s;
+
+  &:hover { 
+    filter: brightness(0.8)
+  }
+}
+
 ::-webkit-scrollbar { 
   width: .4rem;
 }
@@ -66,5 +104,4 @@ button {
   border-radius: 2rem;
   background: var(--green);
 }
-
 `;
