@@ -51,37 +51,50 @@ export const Container = styled.form`
 export const TransactionTypeContainer = styled.div`
   display: flex;
   margin: 1rem 0;
+`;
 
-  button {
-    flex: 1;
-    height: 4rem;
-    border: 1px solid #d7d7d7;
-    background: transparent;
+interface ITransactionTypeButtonProps {
+  isActive: boolean;
+  activeColor: "green" | "red";
+}
 
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border-radius: 0.25rem;
-    transition: border-color 0.2s;
+const transactionTypeButtonColors = {
+  green: "#d7f5ea",
+  red: "#fce3e7",
+};
 
-    & ~ button {
-      margin-left: 0.5rem;
-    }
+export const TransactionTypeButton = styled.button<ITransactionTypeButtonProps>`
+  flex: 1;
+  height: 4rem;
+  border: 1px solid #d7d7d7;
+  background: ${(props) =>
+    props.isActive
+      ? transactionTypeButtonColors[props.activeColor]
+      : "transparent"};
 
-    &:hover {
-      border: 1px solid #bbb;
-    }
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 0.25rem;
+  transition: border-color 0.2s;
 
-    img {
-      width: 20px;
-      height: 20px;
-    }
+  & ~ button {
+    margin-left: 0.5rem;
+  }
 
-    span {
-      display: inline-block;
-      margin-left: 1rem;
-      font-size: 1rem;
-      color: var(--text-title);
-    }
+  &:hover {
+    border: 1px solid #bbb;
+  }
+
+  img {
+    width: 20px;
+    height: 20px;
+  }
+
+  span {
+    display: inline-block;
+    margin-left: 1rem;
+    font-size: 1rem;
+    color: var(--text-title);
   }
 `;
