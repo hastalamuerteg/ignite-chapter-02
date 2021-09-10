@@ -1,24 +1,10 @@
 import { Container } from "./styles";
-import { useEffect, useState } from "react";
-import { apiGetTransactions } from "../../../src/services/api";
 import { format } from "date-fns";
-import { ITransactions } from "../../@types/transactions";
+import { useContext } from "react";
+import { TransactionsContext } from "../../contexts/TransactionsContext";
 
 export function TransactionsTable() {
-  const [transactions, setTransactions] = useState<ITransactions[]>([]);
-
-  useEffect(() => {
-    async function getTransactions() {
-      try {
-        const fetchedTransactions = await apiGetTransactions();
-        setTransactions(fetchedTransactions.transactions);
-      } catch (err) {
-        console.log(err);
-      }
-    }
-    getTransactions();
-  }, []);
-
+  const { transactions } = useContext(TransactionsContext);
   return (
     <Container>
       <table>

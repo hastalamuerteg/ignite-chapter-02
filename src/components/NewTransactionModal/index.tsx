@@ -7,51 +7,35 @@ import {
 import closeModalImg from "../../assets/close.svg";
 import incomeImg from "../../assets/income.svg";
 import outcomeImg from "../../assets/outcome.svg";
-import { ChangeEvent, FormEvent, useState } from "react";
+import { ChangeEvent, FormEvent, useContext, useState } from "react";
 import {
-  ITransactions,
   NewTransactionModalProps,
   Transaction,
 } from "../../@types/transactions";
-import { apiCreateNewTransaction } from "../../services/api";
-import { getNewId } from "../../services/id";
+import { TransactionsContext } from "../../contexts/TransactionsContext";
 
 export function NewTransactionModal({
   isOpen,
   onRequestClose,
 }: NewTransactionModalProps) {
+  const { createNewTransaction } = useContext(TransactionsContext);
   const [transactionType, setTransactionType] =
     useState<Transaction>("deposit");
   const [title, setTitle] = useState("");
-  const [value, setValue] = useState(0);
+  const [amount, setAmount] = useState(0);
   const [category, setCategory] = useState("");
 
-  function clearFormInputs() {
-    setTitle("");
-    setValue(0);
-    setCategory("");
-  }
-
-  function handleDeposit() {
-    setTransactionType("deposit");
-  }
-
-  function handleWithdrawal() {
-    setTransactionType("withdrawal");
-  }
-
+  //Create a new transaction
   async function handleCreateNewTransaction(e: FormEvent) {
     e.preventDefault();
     try {
-      const newTransaction: ITransactions = {
-        id: getNewId(),
+      const newTransaction = {
         title: title,
-        amount: value,
+        amount: amount,
         type: transactionType,
         category: category,
-        createdAt: new Date(),
       };
-      await apiCreateNewTransaction(newTransaction);
+      await createNewTransaction(newTransaction);
     } catch (err) {
       console.log(err);
     }
@@ -63,10 +47,25 @@ export function NewTransactionModal({
     setTitle(e.currentTarget.value);
   }
   function handleInputValueChange(e: ChangeEvent<HTMLInputElement>) {
-    setValue(Number(e.currentTarget.value));
+    setAmount(Number(e.currentTarget.value));
   }
   function handleInputCategoryChange(e: ChangeEvent<HTMLInputElement>) {
     setCategory(e.currentTarget.value);
+  }
+
+  function handleDeposit() {
+    setTransactionType("deposit");
+  }
+
+  function handleWithdrawal() {
+    setTransactionType("withdrawal");
+  }
+
+  function clearFormInputs() {
+    setTitle("");
+    setAmount(0);
+    setCategory("");
+    setTransactionType("deposit");
   }
 
   return (
@@ -96,7 +95,7 @@ export function NewTransactionModal({
           type="number"
           placeholder="Valor"
           onChange={handleInputValueChange}
-          value={value}
+          value={amount}
         />
 
         <TransactionTypeContainer>
