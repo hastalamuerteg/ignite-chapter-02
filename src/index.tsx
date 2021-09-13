@@ -15,7 +15,7 @@ createServer({
         {
           id: getNewId(),
           title: "Compra de computador",
-          amount: 4500,
+          amount: -4500,
           type: "withdrawal",
           category: "Compras",
           createdAt: new Date(),
@@ -31,7 +31,7 @@ createServer({
         {
           id: getNewId(),
           title: "Aluguel",
-          amount: 1900,
+          amount: -1900,
           type: "withdrawal",
           category: "Moradia",
           createdAt: new Date(),

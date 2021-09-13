@@ -17,6 +17,9 @@ export function TransactionsContextProvider({
   children,
 }: ITransactionsContextProviderProps) {
   const [transactions, setTransactions] = useState<ITransactions[]>([]);
+  const [totalIncome, setTotalIncome] = useState(0);
+  const [totalOutcome, setTotalOutcome] = useState(0);
+  const [total, setTotal] = useState(0);
 
   useEffect(() => {
     async function getTransactions() {
@@ -29,6 +32,16 @@ export function TransactionsContextProvider({
     }
     getTransactions();
   }, []);
+
+  useEffect(() => {
+    const totalIncomeCalculated =
+      transactions.length > 0
+        ? transactions
+            .map((transaction) => transaction.amount)
+            .reduce((acc, cur) => acc + cur, 0)
+        : 0;
+    setTotalIncome(totalIncomeCalculated);
+  }, [transactions]);
 
   async function createNewTransaction(
     transactionInput: TransactionClientInput
@@ -50,9 +63,11 @@ export function TransactionsContextProvider({
     }
   }
 
+  console.log(totalIncome);
+
   return (
     <TransactionsContext.Provider
-      value={{ transactions, createNewTransaction }}
+      value={{ transactions, createNewTransaction, totalIncome }}
     >
       {children}
     </TransactionsContext.Provider>

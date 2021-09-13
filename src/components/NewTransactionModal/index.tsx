@@ -31,7 +31,7 @@ export function NewTransactionModal({
     try {
       const newTransaction = {
         title: title,
-        amount: amount,
+        amount: transactionType === "withdrawal" ? -amount : amount,
         type: transactionType,
         category: category,
       };
