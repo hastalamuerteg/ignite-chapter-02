@@ -77,6 +77,18 @@ button {
   padding: 3rem 2rem;
   position: relative;
   border-radius: .25rem;
+  
+  @media screen and (max-width: 768px) {
+    width: 100%;
+    max-width: 50rem;
+
+    position: absolute;
+    z-index: 10;
+    bottom: 0;
+    border-top-right-radius: 1rem;
+    border-top-left-radius: 1rem;
+    padding: 2rem .7rem;
+  }
 }
 
 .react__modal--close { 
@@ -104,4 +116,5 @@ button {
   border-radius: 2rem;
   background: var(--green);
 }
+
 `;

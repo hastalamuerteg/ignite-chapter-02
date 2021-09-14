@@ -6,6 +6,10 @@ export function TransactionsTable() {
   const { transactions } = useTransactions();
   return (
     <Container>
+      <div>
+        <h2>Listagem</h2>
+        <p>{transactions.length} itens</p>
+      </div>
       <table>
         <thead>
           <tr>
