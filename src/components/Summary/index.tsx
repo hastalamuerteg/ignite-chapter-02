@@ -2,21 +2,19 @@ import { Container } from "./styles";
 import incomeImg from "../../assets/income.svg";
 import outcomeImg from "../../assets/outcome.svg";
 import totalImg from "../../assets/total.svg";
-import { TransactionsContext } from "../../contexts/TransactionsContext";
-import { useContext } from "react";
+import { useTransactions } from "../../hooks/useTransactions";
 
 export function Summary() {
-  const { summaryTotal, summaryIncome, summaryOutcome } = useContext(TransactionsContext);
+  const { summaryTotal, summaryIncome, summaryOutcome } = useTransactions();
 
   function formatCurrency(value: number) {
     const formattedValue = new Intl.NumberFormat("pt-BR", {
-      style: 'currency',
-      currency: 'BRL'
+      style: "currency",
+      currency: "BRL",
     }).format(value);
 
     return formattedValue;
   }
-
 
   return (
     <Container>
@@ -25,9 +23,7 @@ export function Summary() {
           <p>Entradas</p>
           <img src={incomeImg} alt="Entradas" />
         </header>
-        <strong>
-         {formatCurrency(summaryIncome)}
-        </strong>
+        <strong>{formatCurrency(summaryIncome)}</strong>
       </div>
       <div>
         <header>

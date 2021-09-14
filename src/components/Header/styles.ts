@@ -12,6 +12,11 @@ export const Content = styled.div`
   max-width: 80%;
   margin: 0 auto;
 
+  @media screen and (max-width: 768px) {
+    display: flex;
+    flex-direction: column;
+  }
+
   button {
     font-size: 1rem;
     background: var(--blue-light);
@@ -23,6 +28,11 @@ export const Content = styled.div`
 
     &:hover {
       filter: brightness(0.9);
+    }
+
+    @media screen and (max-width: 768px) {
+      margin-top: 2rem;
+      width: 100%;
     }
   }
 `;
