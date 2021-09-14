@@ -14,7 +14,9 @@ export type TransactionClientInput = Omit<ITransactions, "id" | "createdAt">;
 export interface ITransactionsContext {
   transactions: ITransactions[];
   createNewTransaction: (transaction: TransactionClientInput) => Promise<void>;
-  totalIncome: number;
+  summaryTotal: number;
+  summaryIncome: number;
+  summaryOutcome: number;
 }
 
 export interface NewTransactionModalProps {

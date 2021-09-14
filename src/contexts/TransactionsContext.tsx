@@ -17,9 +17,9 @@ export function TransactionsContextProvider({
   children,
 }: ITransactionsContextProviderProps) {
   const [transactions, setTransactions] = useState<ITransactions[]>([]);
-  const [totalIncome, setTotalIncome] = useState(0);
-  const [totalOutcome, setTotalOutcome] = useState(0);
-  const [total, setTotal] = useState(0);
+  const [summaryIncome, setSummaryIncome] = useState<number>(0);
+  const [summaryOutcome, setSummaryOutcome] = useState<number>(0);
+  const [summaryTotal, setSummaryTotal] = useState<number>(0);
 
   useEffect(() => {
     async function getTransactions() {
@@ -34,14 +34,30 @@ export function TransactionsContextProvider({
   }, []);
 
   useEffect(() => {
-    const totalIncomeCalculated =
+    const totalTransactionsAmount =
       transactions.length > 0
         ? transactions
-            .map((transaction) => transaction.amount)
-            .reduce((acc, cur) => acc + cur, 0)
+        .map((transaction) => transaction.amount)
+        .reduce((acc, cur) => acc + cur, 0)
         : 0;
-    setTotalIncome(totalIncomeCalculated);
+        setSummaryTotal(totalTransactionsAmount);
+
+    const totalTransactionsIncome = 
+    transactions
+    .filter((transaction) => transaction.amount > 0)
+    .map((trans) => trans.amount)
+    .reduce((acc, cur) => acc + cur, 0);
+    setSummaryIncome(totalTransactionsIncome);
+
+    const totalTransactionsOutcome = 
+    transactions
+    .filter((transaction) => transaction.amount < 0)
+    .map((trans) => trans.amount)
+    .reduce((acc, cur) => acc + cur, 0);
+    setSummaryOutcome(totalTransactionsOutcome);
+    
   }, [transactions]);
+   
 
   async function createNewTransaction(
     transactionInput: TransactionClientInput
@@ -63,11 +79,9 @@ export function TransactionsContextProvider({
     }
   }
 
-  console.log(totalIncome);
-
   return (
     <TransactionsContext.Provider
-      value={{ transactions, createNewTransaction, totalIncome }}
+      value={{ transactions, createNewTransaction, summaryTotal, summaryIncome, summaryOutcome }}
     >
       {children}
     </TransactionsContext.Provider>
